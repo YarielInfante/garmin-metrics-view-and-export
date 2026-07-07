@@ -1,0 +1,35 @@
+# --- secrets & tokens: never commit ---
+.garminconnect/
+tokens/
+*.env
+.env*
+!.env.example
+
+# --- local data: never commit ---
+data/
+*.duckdb
+*.duckdb.wal
+*.sqlite
+*.db
+
+# --- personal reverse-engineering artifacts: real Garmin payloads + notes
+#     with home GPS, birthdate, device serial, etc. Kept locally, never published.
+fixtures/
+docs/garmin-field-notes.md
+
+# --- python ---
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# --- node / frontend ---
+node_modules/
+frontend/dist/
+*.tsbuildinfo
+
+# --- os / editor / local tooling ---
+.DS_Store
+*.log
+.claude/

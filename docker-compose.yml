@@ -1,0 +1,32 @@
+services:
+  garmin-app:
+    # Default: build the image locally from this repo.
+    # To use a prebuilt image instead, comment out `build:` and set e.g.
+    #   image: ghcr.io/OWNER/REPO:latest   # then: docker compose pull && docker compose up -d
+    build: .
+    image: garmin-app
+    container_name: garmin-app
+    restart: unless-stopped            # survives reboots — "leave it running"
+    ports:
+      - "127.0.0.1:8722:8722"          # localhost-only: not reachable from the LAN
+    environment:
+      # set to your local zone so "today" boundaries + the scheduler match your day
+      # (e.g. Europe/Madrid, America/New_York); falls back to UTC.
+      TZ: ${TZ:-Etc/UTC}
+    volumes:
+      # Named volumes (not host bind mounts) so the non-root container can write
+      # them on any OS. Both persist across restarts. Back up with e.g.
+      #   docker run --rm -v garmin_app_garmin-data:/v -v "$PWD":/out alpine \
+      #     tar czf /out/garmin-data-backup.tgz -C /v .
+      - garmin-data:/app/data       # DuckDB cache
+      - garmin-tokens:/tokens        # Garmin OAuth tokens (written by the in-app login)
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8722/api/health',timeout=3).status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 25s
+      retries: 3
+
+volumes:
+  garmin-data:
+  garmin-tokens:

@@ -1,0 +1,20 @@
+# systemd unit (Linux). Install as a *user* service so it uses your home dir:
+#   mkdir -p ~/.config/systemd/user
+#   cp deploy/garmin-app.service ~/.config/systemd/user/
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now garmin-app
+#   loginctl enable-linger $USER   # keep it running when logged out
+# Adjust WorkingDirectory/ExecStart paths to where you cloned the repo.
+
+[Unit]
+Description=Garmin training analytics (local-only)
+After=network-online.target
+
+[Service]
+WorkingDirectory=%h/projects/personal/garmin_app
+ExecStart=%h/projects/personal/garmin_app/.venv/bin/uvicorn backend.app.main:app --host 127.0.0.1 --port 8722
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

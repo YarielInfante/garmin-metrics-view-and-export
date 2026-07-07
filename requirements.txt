@@ -1,0 +1,9 @@
+# Pinned against the versions this app was built and verified with.
+# garminconnect 0.3.x dropped garth and uses its own token store
+# (single garmin_tokens.json file) — see README "Authentication".
+garminconnect==0.3.6
+fastapi==0.139.0
+uvicorn[standard]==0.50.0
+duckdb==1.5.4
+APScheduler==3.11.3
+python-dotenv==1.2.2

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- macOS launchd unit (non-Docker persistence). Edit the paths below to
+     where you cloned the repo, then:
+       cp deploy/garmin-app.plist ~/Library/LaunchAgents/
+       launchctl load ~/Library/LaunchAgents/garmin-app.plist
+     Docker (docker compose up -d) is the recommended way to keep it running. -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>garmin-training-analytics</string>
+
+    <key>WorkingDirectory</key>
+    <string>/PATH/TO/garmin_app</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/PATH/TO/garmin_app/.venv/bin/uvicorn</string>
+        <string>backend.app.main:app</string>
+        <string>--host</string>
+        <string>127.0.0.1</string>
+        <string>--port</string>
+        <string>8722</string>
+    </array>
+
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/PATH/TO/garmin_app/data/garmin-app.log</string>
+    <key>StandardErrorPath</key>
+    <string>/PATH/TO/garmin_app/data/garmin-app.log</string>
+</dict>
+</plist>

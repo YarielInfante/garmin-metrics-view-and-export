@@ -1,0 +1,30 @@
+# build context hygiene — keep the image small and never bake in secrets/data
+.venv/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+frontend/node_modules/
+frontend/dist/
+
+# local data & secrets must never enter the image (mounted at runtime instead)
+data/
+*.duckdb
+*.duckdb.wal
+tokens/
+.garminconnect/
+.env
+*.env
+
+# dev-only / not needed at runtime
+.git/
+.gitignore
+.claude/
+docs/
+fixtures/
+explore.py
+deploy/
+*.log
+.DS_Store
+README.md
