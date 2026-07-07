@@ -10,7 +10,10 @@ as a single Docker container that keeps itself synced in the background.
 
 ## TL;DR — get it running
 
-[Install Docker](https://docs.docker.com/get-docker/), then:
+**1. Install Docker:** https://docs.docker.com/get-docker/ — Docker Desktop on
+macOS/Windows, or Docker Engine on Linux.
+
+**2. Clone and start it:**
 
 ```bash
 git clone https://github.com/YarielInfante/garmin-metrics-view-and-export.git
@@ -18,9 +21,11 @@ cd garmin-metrics-view-and-export
 docker compose up -d --build
 ```
 
-Open **http://127.0.0.1:8722**, sign in with your Garmin account (email + password,
-plus the MFA code if you use 2-factor), and you're done — it syncs in the
-background and restarts on reboot. Requirements and details are below.
+**3. Open http://127.0.0.1:8722** and sign in with your Garmin account — email +
+password, plus the MFA code if you use 2-factor.
+
+That's it — it syncs in the background and restarts on reboot. Requirements and
+details are below.
 
 > **Unofficial & use at your own risk.** Garmin has no official public API; this
 > reads your data through the unofficial [python-garminconnect](https://github.com/cyberjunky/python-garminconnect)
