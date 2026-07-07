@@ -13,19 +13,20 @@ as a single Docker container that keeps itself synced in the background.
 **1. Install Docker:** https://docs.docker.com/get-docker/ — Docker Desktop on
 macOS/Windows, or Docker Engine on Linux.
 
-**2. Clone and start it:**
+**2. Download the compose file and start it** — this pulls the prebuilt image;
+no cloning or building required:
 
 ```bash
-git clone https://github.com/YarielInfante/garmin-metrics-view-and-export.git
-cd garmin-metrics-view-and-export
-docker compose up -d --build
+mkdir garmin-app && cd garmin-app
+curl -O https://raw.githubusercontent.com/YarielInfante/garmin-metrics-view-and-export/main/docker-compose.yml
+docker compose up -d
 ```
 
 **3. Open http://127.0.0.1:8722** and sign in with your Garmin account — email +
 password, plus the MFA code if you use 2-factor.
 
-That's it — it syncs in the background and restarts on reboot. Requirements and
-details are below.
+That's it — it syncs in the background and restarts on reboot. (Prefer to build
+from source? See *Running from source* below.) Requirements and details are below.
 
 > **Unofficial & use at your own risk.** Garmin has no official public API; this
 > reads your data through the unofficial [python-garminconnect](https://github.com/cyberjunky/python-garminconnect)
@@ -62,18 +63,22 @@ details are below.
 ## Quick start (Docker)
 
 You need [Docker](https://docs.docker.com/get-docker/) (Desktop on macOS/Windows,
-Engine on Linux). Then:
+Engine on Linux). Grab the compose file — which pulls the prebuilt image from
+GHCR — and start it:
 
 ```bash
-git clone https://github.com/YarielInfante/garmin-metrics-view-and-export.git
-cd garmin-metrics-view-and-export
-docker compose up -d --build
+mkdir garmin-app && cd garmin-app
+curl -O https://raw.githubusercontent.com/YarielInfante/garmin-metrics-view-and-export/main/docker-compose.yml
+docker compose up -d
 ```
 
 Open **http://127.0.0.1:8722**, and on the setup screen sign in with your Garmin
 email and password (and the MFA code if you have 2-factor enabled). That's it —
 the dashboard fills in as the first sync runs, and the app keeps itself fresh and
 restarts on reboot.
+
+> **Build from source instead** (or to hack on it): clone the repo, uncomment
+> `build: .` in `docker-compose.yml`, and run `docker compose up -d --build`.
 
 - **Localhost only.** The port is published on `127.0.0.1` — it is *not* reachable
   from your network.

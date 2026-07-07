@@ -1,10 +1,10 @@
 services:
   garmin-app:
-    # Default: build the image locally from this repo.
-    # To use a prebuilt image instead, comment out `build:` and set e.g.
-    #   image: ghcr.io/OWNER/REPO:latest   # then: docker compose pull && docker compose up -d
-    build: .
-    image: garmin-app
+    # Default: pull the prebuilt multi-arch image from GHCR — no local build.
+    # To build from source instead (e.g. for development), comment out `image:`
+    # and uncomment `build: .`, then run `docker compose up -d --build`.
+    image: ghcr.io/yarielinfante/garmin-metrics-view-and-export:latest
+    # build: .
     container_name: garmin-app
     restart: unless-stopped            # survives reboots — "leave it running"
     ports:
